@@ -47,7 +47,7 @@ Ensure you have **Node.js 18+** and **npm** installed on your system.
 
 ---
 
-## 📦 Dependencies & Libraries
+##  Dependencies & Libraries
 
 ### Framework & Core
 * **Next.js 14 (App Router):** Production-ready React framework.
