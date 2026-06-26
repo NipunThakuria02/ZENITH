@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* ── Design Tokens ─────────────────────────────────────────── */
+:root {
+  --bg-void:      #080810;
+  --bg-surface:   #0f0f1a;
+  --bg-card:      #111122;
+  --border:       rgba(0, 212, 255, 0.08);
+  --border-hover: rgba(0, 212, 255, 0.35);
+  --accent:       #00d4ff;
+  --accent-glow:  rgba(0, 212, 255, 0.18);
+  --accent-dim:   rgba(0, 212, 255, 0.06);
+  --success:      #00ff88;
+  --debris:       #ff4444;
+  --text-primary: #e0e8ff;
+  --text-secondary: #6080a0;
+  --text-muted:   #3a4a6a;
+  color-scheme: dark;
+}
+
+/* ── Base ───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-void);
+  color: var(--text-primary);
+  font-family: 'Outfit', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+button, input, textarea, select { font: inherit; }
+
+::selection { background: rgba(0, 212, 255, 0.28); color: #fff; }
+
+/* ── Monospace ─────────────────────────────────────────────── */
+.font-mono, code, pre {
+  font-family: 'Space Mono', ui-monospace, 'Cascadia Code', monospace;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-void); }
+::-webkit-scrollbar-thumb { background: var(--accent-glow); border-radius: 4px; }
+
+/* ── Animated star-field backdrop ─────────────────────────── */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(1); }
+  50%       { opacity: 1;    transform: scale(1.4); }
+}
+
+/* ── Pulse ring on selected city button ────────────────────── */
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0   rgba(0, 212, 255, 0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(0, 212, 255, 0); }
+  100% { box-shadow: 0 0 0 0   rgba(0, 212, 255, 0); }
+}
+
+.city-active {
+  animation: pulse-ring 1.6s ease-out;
+}
+
+/* ── Glowing cyan border pulse ──────────────────────────────── */
+@keyframes glow-border {
+  0%, 100% { border-color: rgba(0,212,255,0.15); }
+  50%       { border-color: rgba(0,212,255,0.5);  }
+}
+
+/* ── Slide-up entrance ─────────────────────────────────────── */
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.slide-up { animation: slide-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.slide-up-d1 { animation-delay: 0.08s; }
+.slide-up-d2 { animation-delay: 0.16s; }
+.slide-up-d3 { animation-delay: 0.24s; }
+.slide-up-d4 { animation-delay: 0.32s; }
+
+/* ── Shimmer skeleton ──────────────────────────────────────── */
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position:  200% 0; }
+}
+
+.loading-globe {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 25%,
+    rgba(0,212,255,0.04) 50%,
+    var(--bg-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite;
+}
+
+/* ── Scanline overlay on panel ──────────────────────────────── */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.08) 3px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+  border-radius: inherit;
+}

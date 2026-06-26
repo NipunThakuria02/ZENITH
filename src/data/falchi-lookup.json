@@ -1,0 +1,50 @@
+[
+  {
+    "lat": 13.08,
+    "lon": 80.27,
+    "bortle": 7,
+    "label": "Rural/suburban transition"
+  },
+  {
+    "lat": 19.07,
+    "lon": 72.87,
+    "bortle": 8,
+    "label": "City sky"
+  },
+  {
+    "lat": 28.70,
+    "lon": 77.10,
+    "bortle": 8,
+    "label": "City sky"
+  },
+  {
+    "lat": 12.97,
+    "lon": 77.59,
+    "bortle": 7,
+    "label": "Rural/suburban transition"
+  },
+  {
+    "lat": 40.71,
+    "lon": -74.00,
+    "bortle": 9,
+    "label": "Inner-city sky"
+  },
+  {
+    "lat": 51.50,
+    "lon": -0.12,
+    "bortle": 9,
+    "label": "Inner-city sky"
+  },
+  {
+    "lat": 35.68,
+    "lon": 139.69,
+    "bortle": 9,
+    "label": "Inner-city sky"
+  },
+  {
+    "lat": 26.91,
+    "lon": 75.78,
+    "bortle": 6,
+    "label": "Suburban sky"
+  }
+]

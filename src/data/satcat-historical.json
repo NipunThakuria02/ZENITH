@@ -1,0 +1,10 @@
+[
+  {"year": 2019, "total": 19372, "active": 2218, "label": "Pre-Starlink"},
+  {"year": 2020, "total": 21901, "active": 3372, "label": ""},
+  {"year": 2021, "total": 23089, "active": 4852, "label": ""},
+  {"year": 2022, "total": 24984, "active": 5465, "label": ""},
+  {"year": 2023, "total": 27691, "active": 7560, "label": ""},
+  {"year": 2024, "total": 31200, "active": 10020, "label": ""},
+  {"year": 2025, "total": 36800, "active": 12500, "label": ""},
+  {"year": 2026, "total": 41200, "active": 15200, "label": "Current"}
+]
