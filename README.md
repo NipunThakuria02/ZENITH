@@ -43,11 +43,12 @@ Ensure you have **Node.js 18+** and **npm** installed on your system.
    npm run dev
    ```
 
-
+4. **Access the application:**
+   Open [http://localhost:3000](http://localhost:3000) in your web browser.
 
 ---
 
-##  Dependencies & Libraries
+## 📦 Dependencies & Libraries
 
 ### Framework & Core
 * **Next.js 14 (App Router):** Production-ready React framework.
