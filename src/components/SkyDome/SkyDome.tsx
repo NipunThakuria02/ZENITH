@@ -14,10 +14,11 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 
-import { azElToVector3, raDecToAzEl } from '@/lib/coordinates';
+import { azElToVector3, raDecToAzEl, classifyOrbit } from '@/lib/coordinates';
 import type { Observer, SatelliteResult } from '@/types';
 import SatelliteLayer from './SatelliteLayer';
-import PlanetLayer from './PlanetLayer';
+import PlanetLayer from './planet-layer';
+import SatelliteInfoCard from './SatelliteInfoCard';
 
 /* ── Constants matching the PRD spec exactly ─────────────────────── */
 const DOME_RADIUS = 500;
@@ -37,6 +38,7 @@ interface Props {
   showPlanets?: boolean;
   /** Increment this counter to trigger an immediate TLE re-fetch */
   refreshToken?: number;
+  onSatelliteSelect?: (sat: SatelliteResult | null) => void;
 }
 
 /* ── Star entry shape from stars.json ───────────────────────────── */
@@ -210,7 +212,23 @@ export default function SkyDome({
   showSatellites = true,
   showPlanets = true,
   refreshToken = 0,
+  onSatelliteSelect,
 }: Props) {
+  const [selectedSat, setSelectedSat] = useState<SatelliteResult | null>(null);
+
+  const handleSatelliteSelect = (sat: SatelliteResult | null) => {
+    setSelectedSat(sat);
+    if (onSatelliteSelect) {
+      onSatelliteSelect(sat);
+    }
+  };
+
+  const getAltitudeKm = (periodMin: number) => {
+    const GM = 3.986004418e14; // m³/s²
+    const T = periodMin * 60; // convert minutes to seconds
+    const a = Math.cbrt((GM * T * T) / (4 * Math.PI * Math.PI)); // semi-major axis in metres
+    return Math.round((a - 6371000) / 1000); // subtract Earth radius
+  };
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   // Refs shared with child layers
@@ -315,6 +333,11 @@ export default function SkyDome({
     rendererRef.current = renderer;
     cameraRef.current = camera;
     controlsRef.current = controls;
+    if (typeof window !== 'undefined') {
+      (window as any).__three_scene = scene;
+      (window as any).__three_camera = camera;
+      (window as any).__three_renderer = renderer;
+    }
     setSceneReady(true);
 
     return () => {
@@ -413,6 +436,8 @@ export default function SkyDome({
         <>
           <SatelliteLayer
             scene={sceneRef.current}
+            camera={cameraRef.current}
+            renderer={rendererRef.current}
             observer={observer}
             onCountUpdate={(total, active, debris, results) => {
               if (onCountUpdate) onCountUpdate(total, active, debris, results);
@@ -420,6 +445,8 @@ export default function SkyDome({
             onDataSourceChange={onDataSourceChange}
             visible={showSatellites}
             refreshToken={refreshToken}
+            onSatelliteSelect={handleSatelliteSelect}
+            selectedSatName={selectedSat?.name ?? null}
           />
           <PlanetLayer scene={sceneRef.current} observer={observer} visible={showPlanets} />
         </>
@@ -519,6 +546,15 @@ export default function SkyDome({
             }}>FEED OFFLINE — SAMPLE VIEW</span>
           </div>
         </>
+      )}
+
+      {selectedSat && (
+        <SatelliteInfoCard
+          sat={selectedSat}
+          altitudeKm={getAltitudeKm(selectedSat.period)}
+          orbitClass={classifyOrbit(selectedSat.period)}
+          onClose={() => handleSatelliteSelect(null)}
+        />
       )}
 
       {starStatus === 'ready' && (
