@@ -65,7 +65,7 @@ Ensure you have **Node.js 18+** and **npm** installed on your system.
 
 ---
 
-## 🚀 Hosting on Vercel
+##  Hosting on Vercel
 
 1. Push your clean codebase to a GitHub repository.
 2. Link the repository to your [Vercel Dashboard](https://vercel.com).
